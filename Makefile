@@ -26,5 +26,10 @@ run-server:
 superuser:
 	poetry run python -m cooking_core.manage createsuperuser
 
+.PHONY: up-dependencies-only
+up-dependencies-only:
+	test -f .env || touch .env
+	docker compose -f docker-compose.yml up --force-recreate db
+
 .PHONY: update
 update: install migrate install-pre-commit ;
