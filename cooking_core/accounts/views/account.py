@@ -12,10 +12,12 @@ class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
 
     def create(self, request, *args, **kwargs):
-        # TODO: Actually create an account
         key_pair = generate_key_pair()
-        account = {
-            'account_number': key_pair.public,
+        account = Account.objects.create(account_number=key_pair.public)
+
+        results = {
+            'account': AccountSerializer(account).data,
             'signing_key': key_pair.private,
         }
-        return Response(account, status=status.HTTP_201_CREATED)
+
+        return Response(results, status=status.HTTP_201_CREATED)
