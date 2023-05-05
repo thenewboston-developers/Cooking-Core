@@ -18,6 +18,7 @@ pyyaml = "^6.0"
 django-cors-headers = "^3.14.0"
 pydantic = "^1.10.7"
 pynacl = "^1.5.0"
+djangorestframework-simplejwt = "^5.2.2"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.1"

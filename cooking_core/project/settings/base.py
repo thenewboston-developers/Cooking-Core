@@ -13,8 +13,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third party
-    'rest_framework',
     'corsheaders',
+    'rest_framework',
+    'rest_framework_simplejwt',
 
     # Apps
     'cooking_core.accounts.apps.AccountsConfig',
@@ -78,6 +79,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'accounts.Account'
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
