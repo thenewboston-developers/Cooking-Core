@@ -3,13 +3,16 @@ from typing import List
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
-from cooking_core.core.constants import ACCOUNT_NUMBER_LENGTH
+from cooking_core.general.constants import ACCOUNT_NUMBER_LENGTH
+from cooking_core.general.validators import HexStringValidator
 
 from ..managers.account import AccountManager
 
 
 class Account(AbstractBaseUser, PermissionsMixin):
-    account_number = models.CharField(max_length=ACCOUNT_NUMBER_LENGTH, primary_key=True)
+    account_number = models.CharField(
+        max_length=ACCOUNT_NUMBER_LENGTH, primary_key=True, validators=(HexStringValidator(ACCOUNT_NUMBER_LENGTH),)
+    )
     balance = models.PositiveBigIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

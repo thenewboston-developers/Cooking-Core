@@ -1,7 +1,7 @@
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
-from cooking_core.core.utils.cryptography import generate_key_pair
+from cooking_core.general.utils.cryptography import generate_key_pair
 
 from ..models import Account
 from ..serializers.account import AccountSerializer

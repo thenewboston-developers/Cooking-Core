@@ -1,6 +1,6 @@
 from django.contrib.auth.models import BaseUserManager
 
-from cooking_core.core.utils.cryptography import derive_public_key
+from cooking_core.general.utils.cryptography import derive_public_key
 
 
 class AccountManager(BaseUserManager):
