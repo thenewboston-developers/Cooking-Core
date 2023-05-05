@@ -1,8 +1,10 @@
 from django.db import models
 
+from cooking_core.core.constants import ACCOUNT_NUMBER_LENGTH
+
 
 class Account(models.Model):
-    account_number = models.CharField(max_length=64, primary_key=True)
+    account_number = models.CharField(max_length=ACCOUNT_NUMBER_LENGTH, primary_key=True)
     balance = models.PositiveBigIntegerField()
 
     def __str__(self):
