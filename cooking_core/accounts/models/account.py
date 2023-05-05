@@ -14,6 +14,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
         max_length=ACCOUNT_NUMBER_LENGTH, primary_key=True, validators=(HexStringValidator(ACCOUNT_NUMBER_LENGTH),)
     )
     balance = models.PositiveBigIntegerField(default=0)
+    display_image = models.URLField(max_length=200, blank=True)
+    display_name = models.CharField(max_length=50, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
