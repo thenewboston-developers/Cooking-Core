@@ -16,9 +16,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'account_number'
     EMAIL_FIELD = None
     REQUIRED_FIELDS: List[str] = []
+    USERNAME_FIELD = 'account_number'
 
     def __str__(self):
         return f'{self.account_number} | {self.balance}'
