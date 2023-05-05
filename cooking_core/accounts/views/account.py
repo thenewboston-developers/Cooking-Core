@@ -12,6 +12,7 @@ class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
 
     def create(self, request, *args, **kwargs):
+        # TODO: Actually create an account
         key_pair = generate_key_pair()
         account = {
             'account_number': key_pair.public,
