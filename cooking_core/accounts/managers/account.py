@@ -3,7 +3,7 @@ from django.contrib.auth.models import BaseUserManager
 from cooking_core.core.utils.cryptography import derive_public_key
 
 
-class UserManager(BaseUserManager):
+class AccountManager(BaseUserManager):
 
     def create_superuser(self, account_number, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
