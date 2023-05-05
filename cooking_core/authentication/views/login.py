@@ -16,7 +16,6 @@ class LoginView(APIView):
         account = serializer.save()
         refresh_token = RefreshToken.for_user(account)
 
-        # TODO: Need to return account number as well
         return Response({
             'account': AccountSerializer(account).data,
             'authentication': {
