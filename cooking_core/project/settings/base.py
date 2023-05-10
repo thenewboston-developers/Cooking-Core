@@ -19,6 +19,7 @@ INSTALLED_APPS = [
 
     # Apps
     'cooking_core.accounts.apps.AccountsConfig',
+    'cooking_core.recipes.apps.RecipesConfig',
 ]
 
 MIDDLEWARE = [
