@@ -4,7 +4,7 @@ from django.db import models
 class Recipe(models.Model):
     creator = models.ForeignKey('accounts.Account', on_delete=models.CASCADE)
     description = models.TextField()
-    title = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.title
+        return self.name
