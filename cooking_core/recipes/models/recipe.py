@@ -1,7 +1,9 @@
 from django.db import models
 
+from cooking_core.general.models import CreatedModified
 
-class Recipe(models.Model):
+
+class Recipe(CreatedModified):
     creator = models.ForeignKey('accounts.Account', on_delete=models.CASCADE)
     description = models.TextField()
     image_url = models.URLField()
