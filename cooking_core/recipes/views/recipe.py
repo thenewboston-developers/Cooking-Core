@@ -6,7 +6,7 @@ from cooking_core.general.permissions import IsObjectCreatorOrReadOnly
 
 from ..filters.recipe import RecipeFilter
 from ..models import Recipe
-from ..serializers.recipe import RecipeSerializer
+from ..serializers.recipe import RecipeReadSerializer, RecipeWriteSerializer
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -14,7 +14,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     filterset_class = RecipeFilter
     permission_classes = [IsObjectCreatorOrReadOnly]
     queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
+    serializer_class = RecipeWriteSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data={
@@ -22,6 +22,23 @@ class RecipeViewSet(viewsets.ModelViewSet):
             'creator': request.user.pk,
         })
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+        recipe = serializer.save()
+        read_serializer = RecipeReadSerializer(recipe)
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(read_serializer.data, status=status.HTTP_201_CREATED)
+
+    def get_serializer_class(self):
+        if self.action in ['create', 'partial_update', 'update']:
+            return RecipeWriteSerializer
+
+        return RecipeReadSerializer
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        recipe = serializer.save()
+        read_serializer = RecipeReadSerializer(recipe)
+
+        return Response(read_serializer.data)
