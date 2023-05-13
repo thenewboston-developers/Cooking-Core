@@ -11,5 +11,5 @@ cp cooking_core/project/settings/templates/settings.dev.py ./local/settings.dev.
 make shell
 
 from cooking_core.config.models import Config
-Config.objects.create(owner="ACCOUNT_NUMBER_HERE", transaction_fee=1)
+Config.objects.create(owner=None, transaction_fee=1)
 ```
