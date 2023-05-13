@@ -1,9 +1,10 @@
 from django.contrib.auth.models import BaseUserManager
 
+from cooking_core.general.managers import CustomQuerySet
 from cooking_core.general.utils.cryptography import derive_public_key
 
 
-class AccountManager(BaseUserManager):
+class AccountManager(BaseUserManager.from_queryset(CustomQuerySet)):  # type: ignore
 
     def create_superuser(self, account_number, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
