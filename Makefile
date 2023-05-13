@@ -22,6 +22,10 @@ migrations:
 run-server:
 	poetry run python -m cooking_core.manage runserver
 
+.PHONY: shell
+shell:
+	poetry run python -m cooking_core.manage shell
+
 .PHONY: superuser
 superuser:
 	poetry run python -m cooking_core.manage createsuperuser

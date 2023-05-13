@@ -19,7 +19,9 @@ INSTALLED_APPS = [
 
     # Apps
     'cooking_core.accounts.apps.AccountsConfig',
+    'cooking_core.blocks.apps.BlocksConfig',
     'cooking_core.comments.apps.CommentsConfig',
+    'cooking_core.config.apps.SettingsConfig',
     'cooking_core.recipes.apps.RecipesConfig',
 ]
 

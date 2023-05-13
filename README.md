@@ -6,3 +6,10 @@ Project setup instructions here.
 mkdir -p local
 cp cooking_core/project/settings/templates/settings.dev.py ./local/settings.dev.py
 ```
+
+```bash
+make shell
+
+from cooking_core.config.models import Config
+Config.objects.create(owner="ACCOUNT_NUMBER_HERE", transaction_fee=1)
+```
