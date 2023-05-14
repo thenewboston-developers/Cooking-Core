@@ -1,7 +1,12 @@
+from functools import partial
+
 from rest_framework.mixins import CreateModelMixin, ListModelMixin
 
+from cooking_core.accounts import consumers
+from cooking_core.accounts.consumers import MessageType
 from cooking_core.accounts.models import Account
 from cooking_core.config.models import get_value
+from cooking_core.general.utils.misc import apply_on_commit
 from cooking_core.general.views import CustomGenericViewSet
 
 from ..models.block import Block
@@ -14,15 +19,11 @@ class BlockViewSet(CreateModelMixin, ListModelMixin, CustomGenericViewSet):
 
     def perform_create(self, serializer):
         rv = super().perform_create(serializer)
-
-        # TODO(bucky): Uncomment this
-        # message = serializer.data
+        message = serializer.data
 
         # TODO(dmu) MEDIUM: Consider moving apply_on_commit(consumers.send) to Block.save()
         # `consumers.send` so we can mock `send` in `consumers`
-
-        # TODO(bucky): Uncomment this
-        # apply_on_commit(partial(consumers.send, MessageType.CREATE_BLOCK, message['recipient'], message))
+        apply_on_commit(partial(consumers.send, MessageType.CREATE_BLOCK, message['recipient'], message))
 
         block = serializer.instance
         amount = block.amount
