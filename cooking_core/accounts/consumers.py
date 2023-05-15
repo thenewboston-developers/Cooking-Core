@@ -8,6 +8,7 @@ from channels.generic.websocket import JsonWebsocketConsumer
 
 from cooking_core.general.authentication import authenticate
 from cooking_core.general.exceptions import NotAuthenticated
+from cooking_core.general.utils.cryptography import derive_public_key
 
 ACCOUNT_GROUP_TEMPLATE = 'account_{}'  # only the account owner is subscribed to this group
 ONLINE_STATUS_TRACKING_GROUP_TEMPLATE = 'online_{}'  # peers subscribe to this channel for online status notifications
@@ -86,6 +87,20 @@ class AccountConsumer(JsonWebsocketConsumer):
     # RPC-methods
     def rpc_authenticate(self, token):
         if not (account_number := authenticate(token)) or account_number != self.account_number:
+            return False
+
+        self.add_to_account_group()
+        self.send_to_group(
+            ONLINE_STATUS_TRACKING_GROUP_TEMPLATE.format(self.account_number),
+            self.make_online_tracking_payload(True),
+        )
+        return True
+
+    def rpc_authenticate_signing_key(self, signing_key):
+        try:
+            if self.account_number != derive_public_key(signing_key):
+                return False
+        except Exception:
             return False
 
         self.add_to_account_group()
