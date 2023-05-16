@@ -2,6 +2,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
+from cooking_core.config.models import get_value
+from cooking_core.general.balance import deduct_amount
 from cooking_core.general.permissions import IsObjectCreatorOrReadOnly
 
 from ..filters.recipe import RecipeFilter
@@ -17,11 +19,14 @@ class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = RecipeWriteSerializer
 
     def create(self, request, *args, **kwargs):
-        # TODO: Take a fee
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         recipe = serializer.save()
         read_serializer = RecipeReadSerializer(recipe)
+
+        creator = recipe.creator
+        transaction_fee = get_value('transaction_fee')
+        deduct_amount(account_number=creator.pk, amount=transaction_fee)
 
         return Response(read_serializer.data, status=status.HTTP_201_CREATED)
 
@@ -35,12 +40,15 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return RecipeReadSerializer
 
     def update(self, request, *args, **kwargs):
-        # TODO: Take a fee
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer = self.get_serializer(instance, data=request.data, context={'request': request}, partial=partial)
         serializer.is_valid(raise_exception=True)
         recipe = serializer.save()
         read_serializer = RecipeReadSerializer(recipe)
+
+        creator = recipe.creator
+        transaction_fee = get_value('transaction_fee')
+        deduct_amount(account_number=creator.pk, amount=transaction_fee)
 
         return Response(read_serializer.data)

@@ -4,6 +4,7 @@ from rest_framework.exceptions import ValidationError
 from cooking_core.accounts.models.account import Account
 from cooking_core.accounts.serializers.account import AccountSerializer
 from cooking_core.config.models import get_value
+from cooking_core.general.balance import validate_balance_covers_transaction_fee
 
 from ..models.comment import Comment
 
@@ -22,6 +23,12 @@ class CommentUpdateSerializer(serializers.ModelSerializer):
         model = Comment
         fields = '__all__'
         read_only_fields = ('amount', 'creator', 'recipe')
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        request = self.context.get('request')
+        validate_balance_covers_transaction_fee(account_number=request.user.pk)
+        return attrs
 
 
 class CommentWriteSerializer(serializers.ModelSerializer):
