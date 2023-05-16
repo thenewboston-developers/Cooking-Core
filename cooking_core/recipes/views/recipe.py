@@ -17,6 +17,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = RecipeWriteSerializer
 
     def create(self, request, *args, **kwargs):
+        # TODO: Take a fee
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         recipe = serializer.save()
@@ -34,6 +35,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return RecipeReadSerializer
 
     def update(self, request, *args, **kwargs):
+        # TODO: Take a fee
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
