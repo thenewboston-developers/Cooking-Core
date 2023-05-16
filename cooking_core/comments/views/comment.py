@@ -2,8 +2,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
-from cooking_core.accounts.models.account import Account
 from cooking_core.config.models import get_value
+from cooking_core.general.balance import deduct_amount
 from cooking_core.general.permissions import IsObjectCreatorOrReadOnly
 
 from ..filters.comment import CommentFilter
@@ -22,24 +22,17 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         comment = serializer.save()
+        read_serializer = CommentReadSerializer(comment)
 
         amount = comment.amount
         creator = comment.creator
         recipe = comment.recipe
-
         transaction_fee = get_value('transaction_fee')
         total_amount = amount + transaction_fee
-
-        # It is crucial to make select_for_update(), so we get database row lock till the moment of actual update
-        sender = Account.objects.select_for_update().get_or_none(account_number=creator.pk)
-        sender.balance -= total_amount
-        assert sender.balance >= 0
-        sender.save()
+        deduct_amount(account_number=creator.pk, amount=total_amount)
 
         recipe.balance += amount
         recipe.save()
-
-        read_serializer = CommentReadSerializer(comment)
 
         return Response(read_serializer.data, status=status.HTTP_201_CREATED)
 
@@ -56,12 +49,15 @@ class CommentViewSet(viewsets.ModelViewSet):
         return CommentReadSerializer
 
     def update(self, request, *args, **kwargs):
-        # TODO: Take a fee
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer = self.get_serializer(instance, data=request.data, context={'request': request}, partial=partial)
         serializer.is_valid(raise_exception=True)
         comment = serializer.save()
         read_serializer = CommentReadSerializer(comment)
+
+        creator = comment.creator
+        transaction_fee = get_value('transaction_fee')
+        deduct_amount(account_number=creator.pk, amount=transaction_fee)
 
         return Response(read_serializer.data)

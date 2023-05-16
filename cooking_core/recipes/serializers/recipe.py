@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from cooking_core.accounts.serializers.account import AccountSerializer
+from cooking_core.general.balance import validate_balance_covers_transaction_fee
 
 from ..models.recipe import Recipe
 
@@ -27,3 +28,9 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
             'creator': request.user,
         })
         return recipe
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        request = self.context.get('request')
+        validate_balance_covers_transaction_fee(account_number=request.user.pk)
+        return attrs
