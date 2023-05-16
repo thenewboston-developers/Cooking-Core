@@ -11,7 +11,6 @@ class RecipeReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = '__all__'
-        read_only_fields = ('balance', 'creator')
 
 
 class RecipeWriteSerializer(serializers.ModelSerializer):
