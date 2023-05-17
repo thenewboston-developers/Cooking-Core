@@ -25,6 +25,7 @@ django-model-utils = "^4.3.1"
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.1"
 colorlog = "^6.7.0"
+django-debug-toolbar = "^4.1.0"
 
 [tool.isort]
 multi_line_output = 5
