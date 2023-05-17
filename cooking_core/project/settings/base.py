@@ -4,6 +4,10 @@ SECRET_KEY = NotImplemented
 ALLOWED_HOSTS = ['*']
 CORS_ALLOW_ALL_ORIGINS = True
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 INSTALLED_APPS = [
     'daphne',
     'django.contrib.admin',
@@ -17,6 +21,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
+    'debug_toolbar',
 
     # Apps
     'cooking_core.accounts.apps.AccountsConfig',
@@ -27,6 +33,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

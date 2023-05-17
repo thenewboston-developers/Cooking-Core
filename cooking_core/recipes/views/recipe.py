@@ -31,7 +31,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return Response(read_serializer.data, status=status.HTTP_201_CREATED)
 
     def get_queryset(self):
-        return Recipe.objects.order_by('-modified_date')
+        return Recipe.objects.select_related('creator').order_by('-modified_date')
 
     def get_serializer_class(self):
         if self.action in ['create', 'partial_update', 'update']:

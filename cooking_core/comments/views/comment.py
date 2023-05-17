@@ -37,7 +37,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         return Response(read_serializer.data, status=status.HTTP_201_CREATED)
 
     def get_queryset(self):
-        return Comment.objects.order_by('-modified_date')
+        return Comment.objects.select_related('creator').order_by('-modified_date')
 
     def get_serializer_class(self):
         if self.action == 'create':
