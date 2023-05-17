@@ -14,6 +14,16 @@ services:
     volumes:
       - postgresql-data:/var/lib/postgresql/data
 
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://cooking_core:cooking_core@db:5432/cooking_core
+
 volumes:
   postgresql-data:
     driver: local
