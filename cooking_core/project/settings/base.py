@@ -1,8 +1,11 @@
+from typing import List
+
 DEBUG = False
 SECRET_KEY = NotImplemented
 
 ALLOWED_HOSTS = ['*']
 CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS: List[str] = []
 
 INTERNAL_IPS = [
     '127.0.0.1',
@@ -33,10 +36,10 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -71,7 +74,7 @@ DATABASES = {
         'NAME': 'cooking_core',
         'USER': 'cooking_core',
         'PASSWORD': 'cooking_core',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
         'ATOMIC_REQUESTS': True,
         'CONN_MAX_AGE': 600,
@@ -101,5 +104,5 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # type: ignore # noqa: F821
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
