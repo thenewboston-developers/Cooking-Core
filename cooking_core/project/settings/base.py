@@ -74,7 +74,7 @@ DATABASES = {
         'NAME': 'cooking_core',
         'USER': 'cooking_core',
         'PASSWORD': 'cooking_core',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': '5432',
         'ATOMIC_REQUESTS': True,
         'CONN_MAX_AGE': 600,
