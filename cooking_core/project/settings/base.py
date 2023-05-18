@@ -3,7 +3,7 @@ from typing import List
 DEBUG = False
 SECRET_KEY = NotImplemented
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS: List[str] = ['*']
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS: List[str] = []
 
