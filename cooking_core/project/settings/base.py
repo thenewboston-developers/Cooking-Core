@@ -1,11 +1,19 @@
 from typing import List
 
+
+def get_trusted_origins():
+    try:
+        return CORE_TRUSTED_ORIGINS.split(',')  # type: ignore # noqa: F821
+    except NameError:
+        return []
+
+
 DEBUG = False
 SECRET_KEY = NotImplemented
 
 ALLOWED_HOSTS: List[str] = ['*']
 CORS_ALLOW_ALL_ORIGINS = True
-CSRF_TRUSTED_ORIGINS: List[str] = []
+CSRF_TRUSTED_ORIGINS: List[str] = get_trusted_origins()
 
 INTERNAL_IPS = [
     '127.0.0.1',
