@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'debug_toolbar',
+    'storages',
 
     # Apps
     'cooking_core.accounts.apps.AccountsConfig',
@@ -109,6 +110,10 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'  # type: ignore # noqa: F821
+
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # type: ignore # noqa: F821
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

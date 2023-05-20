@@ -6,4 +6,5 @@ if IN_DOCKER or os.path.isfile('/.dockerenv'):  # type: ignore # noqa: F821
         'django.middleware.security.SecurityMiddleware'
     ]
     MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')  # type: ignore # noqa: F821
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
