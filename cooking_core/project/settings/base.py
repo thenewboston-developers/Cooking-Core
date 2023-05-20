@@ -116,4 +116,7 @@ MEDIA_ROOT = BASE_DIR / 'media'  # type: ignore # noqa: F821
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # type: ignore # noqa: F821
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
