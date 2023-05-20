@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'debug_toolbar',
+    'storages',
 
     # Apps
     'cooking_core.accounts.apps.AccountsConfig',

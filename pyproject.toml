@@ -23,6 +23,8 @@ channels = {extras = ["daphne"], version = "^4.0.0"}
 django-model-utils = "^4.3.1"
 whitenoise = "^6.4.0"
 pillow = "^9.5.0"
+django-storages = "^1.13.2"
+boto3 = "^1.26.137"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.1"
