@@ -1,5 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 
 from cooking_core.config.models import get_value
@@ -14,6 +15,7 @@ from ..serializers.recipe import RecipeReadSerializer, RecipeWriteSerializer
 class RecipeViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = RecipeFilter
+    parser_classes = (MultiPartParser, FormParser)
     permission_classes = [IsObjectCreatorOrReadOnly]
     queryset = Recipe.objects.all()
     serializer_class = RecipeWriteSerializer
