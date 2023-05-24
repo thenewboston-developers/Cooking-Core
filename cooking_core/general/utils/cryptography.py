@@ -10,8 +10,8 @@ from .types import AccountNumber, SigningKey, hexstr
 
 
 class KeyPair(NamedTuple):
-    private: SigningKey
-    public: AccountNumber
+    private: str
+    public: str
 
 
 class CustomEncoder(json.JSONEncoder):
