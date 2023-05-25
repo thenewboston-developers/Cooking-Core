@@ -25,7 +25,7 @@ jobs:
           POSTGRES_PASSWORD: cooking_core
 
     steps:
-      - # checks out the repository using the checkout action
+      # checks out the repository using the checkout action
       - uses: actions/checkout@v2
 
       - name: Install Poetry
