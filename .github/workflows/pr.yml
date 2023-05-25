@@ -1,0 +1,45 @@
+name: Quality Assurance
+
+# triggered when a pull request is made or called from another workflow
+# in our deployment workflow we will call this workflow to run these checks before deploying
+on: [pull_request, workflow_call]
+
+jobs:
+  quality-assurance:
+    # human friendly display name
+    name: Quality Assurance
+
+    # this job will run on the latest version of Ubuntu available
+    runs-on: ubuntu-latest
+
+    # run inside a Python 3.10.4 Docker container, specifically one based on Debian Buster
+    container: python:3.10.4-buster
+
+    # section where background services needed by the job are defined (spun up in a separate Docker container)
+    services:
+      db:
+        image: postgres:14.2-alpine
+        env:
+          POSTGRES_DB: cooking_core
+          POSTGRES_USER: cooking_core
+          POSTGRES_PASSWORD: cooking_core
+
+    steps:
+      - # checks out the repository using the checkout action
+      - uses: actions/checkout@v2
+
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: 1.4.2
+
+      - name: Install Dependencies
+        run: make install && make install-pre-commit
+
+      - name: Lint
+        run: make lint
+
+      - name: Test
+        run: make test
+        env:
+          COOKING_CORE_SETTING_DATABASES: '{"default":{"HOST":"db"}}'
