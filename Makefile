@@ -30,6 +30,10 @@ shell:
 superuser:
 	poetry run python -m cooking_core.manage createsuperuser
 
+.PHONY: test
+test:
+	poetry run pytest -v -rs -n auto --show-capture=no
+
 .PHONY: up-dependencies-only
 up-dependencies-only:
 	test -f .env || touch .env

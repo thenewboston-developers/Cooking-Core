@@ -25,6 +25,10 @@ whitenoise = "^6.4.0"
 pillow = "^9.5.0"
 django-storages = "^1.13.2"
 boto3 = "^1.26.137"
+pytest = "^7.3.1"
+pytest-xdist = "^3.3.1"
+pytest-django = "^4.5.2"
+model-bakery = "^1.11.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.1"
@@ -34,6 +38,13 @@ django-debug-toolbar = "^4.1.0"
 [tool.isort]
 multi_line_output = 5
 line_length = 119
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "cooking_core.project.settings"
+django_find_project = false
+python_files = "test_*.py"
+testpaths = ["cooking_core"]
+filterwarnings = "ignore::DeprecationWarning:^(?!node\\.).*:"
 
 [tool.yapf]
 based_on_style = "google"

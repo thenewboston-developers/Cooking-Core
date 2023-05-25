@@ -18,7 +18,7 @@ LOGGING = {
         logger_name: {
             'level': 'WARNING',
             'propagate': True,
-        } for logger_name in ('django', 'django.request', 'django.db.backends', 'django.template', 'bitcoin_core')
+        } for logger_name in ('django', 'django.request', 'django.db.backends', 'django.template', 'cooking_core')
     },
     'root': {
         'level': 'DEBUG',
