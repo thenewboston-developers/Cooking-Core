@@ -1,0 +1,30 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency: master
+
+jobs:
+  quality-assurance:
+    name: Quality Assurance
+    uses: ./.github/workflows/pr.yml
+
+  build-and-push-images:
+    name: Build and Push Docker Images
+    needs: quality-assurance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push Core Image to Github Packages
+        uses: docker/build-push-action@v2
+        with:
+          tags: ghcr.io/thenewboston-developers/cooking_core:latest
+          push: true
