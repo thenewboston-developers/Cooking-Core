@@ -26,13 +26,13 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/github
-          chmod 600 ~/.ssh/github
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa_cooking
+          chmod 600 ~/.ssh/id_rsa_cooking
           cat >>~/.ssh/config <<END
           Host target
             HostName $SSH_HOST
             User $SSH_USER
-            IdentityFile ~/.ssh/github
+            IdentityFile ~/.ssh/id_rsa_cooking
             LogLevel ERROR
             StrictHostKeyChecking no
           END
