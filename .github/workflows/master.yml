@@ -5,7 +5,9 @@ on:
     branches:
       - master
 
-concurrency: master
+concurrency:
+  group: master
+  cancel-in-progress: true
 
 jobs:
   quality-assurance:
@@ -18,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
         run: |
           mkdir -p ~/.ssh/
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/github
