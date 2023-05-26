@@ -19,10 +19,6 @@ jobs:
     needs: quality-assurance
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          secrets:
-            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
