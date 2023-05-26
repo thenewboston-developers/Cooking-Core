@@ -1,6 +1,5 @@
 DEBUG = True
 
-MIDDLEWARE += ('core.core.middleware.LoggingMiddleware',)  # type: ignore # noqa: F821
 LOGGING['formatters']['colored'] = {  # type: ignore # noqa: F821
     '()': 'colorlog.ColoredFormatter',
     'format': '%(log_color)s%(asctime)s %(levelname)s %(name)s %(bold_white)s%(message)s',
