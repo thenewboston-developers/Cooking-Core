@@ -8,32 +8,32 @@ readme = "README.md"
 packages = [{include = "cooking_core"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+boto3 = "^1.26.137"
+channels = {extras = ["daphne"], version = "^4.0.0"}
 django = "^4.2"
-djangorestframework = "^3.14.0"
-psycopg2 = "^2.9.6"
-django-filter = "^23.2"
-django-split-settings = "^1.2.0"
-pyyaml = "^6.0"
 django-cors-headers = "^3.14.0"
+django-filter = "^23.2"
+django-model-utils = "^4.3.1"
+django-split-settings = "^1.2.0"
+django-storages = "^1.13.2"
+djangorestframework = "^3.14.0"
+djangorestframework-simplejwt = "^5.2.2"
+model-bakery = "^1.11.0"
+pillow = "^9.5.0"
+psycopg2 = "^2.9.6"
 pydantic = "^1.10.7"
 pynacl = "^1.5.0"
-djangorestframework-simplejwt = "^5.2.2"
-channels = {extras = ["daphne"], version = "^4.0.0"}
-django-model-utils = "^4.3.1"
-whitenoise = "^6.4.0"
-pillow = "^9.5.0"
-django-storages = "^1.13.2"
-boto3 = "^1.26.137"
 pytest = "^7.3.1"
-pytest-xdist = "^3.3.1"
 pytest-django = "^4.5.2"
-model-bakery = "^1.11.0"
+pytest-xdist = "^3.3.1"
+python = "^3.10"
+pyyaml = "^6.0"
+whitenoise = "^6.4.0"
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^3.3.1"
 colorlog = "^6.7.0"
 django-debug-toolbar = "^4.1.0"
+pre-commit = "^3.3.1"
 
 [tool.isort]
 multi_line_output = 5
